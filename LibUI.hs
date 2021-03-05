@@ -20,7 +20,7 @@ LibUI = do
          putStrLn "\nPress y to continue, or any other key to exit: "
          continue <-getLine
          if (continue == "y")
-            then main
+            then LibUI
          else
             E.exitSuccess
    else if (choice == "d")
@@ -31,7 +31,7 @@ LibUI = do
          putStrLn "\nPress y to continue, or any other key to exit: "
          continue <-getLine
          if (continue == "y")
-            then main
+            then LibUI
          else
             E.exitSuccess
    else do
