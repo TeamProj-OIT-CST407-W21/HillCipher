@@ -69,7 +69,9 @@ intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list m
 matrixTwosVectMult :: [[Int]] -> [[Int]] -> [[Int]]
 matrixTwosVectMult matrix vect = [[((matrix !! 0 !! 0) * (vect !! 0 !! 0) + (matrix !! 0 !! 1) * (vect !! 1 !! 0))], [((matrix !! 1 !! 0) * (vect !! 0 !! 0) + (matrix !! 1 !! 1) * (vect !! 1 !! 0))]]
 
-
+---char list to matrix
+charKeytoMatrix :: [Char] -> [[Int]]
+charKeytoMatrix list = intListtoMatrix (messageNum list) 
 
 ---will need to be sure is 2x2 or 4 long, but takes an integer list and converts to a 2x2 matrix
 intListtoMatrix :: [Int] -> [[Int]]
