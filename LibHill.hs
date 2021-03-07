@@ -92,7 +92,6 @@ flipPolarity x = 0 - x
 
 ---data format helpers (see readme)
 
-
 ---char list to matrix
 charKeytoMatrix :: [Char] -> [[Int]]
 charKeytoMatrix list = intListtoMatrix (messageNum list) 
@@ -115,43 +114,6 @@ changeVecttoList vectors newlist iter
  | (iter >= (length vectors)) = newlist
  | (iter < (length vectors)) = changeVecttoList vectors (L.concat [newlist, (L.concat [vectors !! iter !! 0, vectors !! iter !! 1])]) (iter + 1)
  
-----converter to change formatted plaintext to a list of numbers
-messageNum :: [Char] -> [Int]
-messageNum message = L.map lowercharNum message
-
-----converter to change list of numbers to uppercase ciphertext
-numCipher :: [Int] -> [Char]
-numCipher list = L.map numUpperchar list
-
-----final character formating : removing non-letter characters, padding if repeat (hello becomes helxlo) and 
-----putting plaintext to lowercase
-----latter for decrypt may need one for formatting decryption to lowercase plaintext ?
-formatMFin :: [Char] -> [Char]
-formatMFin message = lengthFormat (formatMone message)
-
---pad for repetition
-charRepeat :: [Char] -> Int -> [Char]
-charRepeat message i
-  | ((i + 1) == (length message)) = message
-  | ((message !! i == message !! (i+1)) && ((i+1) < length message)) = charRepeat (finConcat (message) (i+1)) (i+1)
-  | ((message !! i /= message !! (i+1)) && ((i+1) < length message)) = charRepeat (message) (i+1)
-  | ((i + 1) > (length message)) = ['E']
-
-----formatter to pad if text list is odd to change to a matrix
-lengthFormat :: [Char] -> [Char]
-lengthFormat message
- | (N.even (length message)) = message
- | (N.odd (length message)) = L.concat [message, ['x']] 
-
-
-----helpers for character repetition padding
-
-appendXAT :: [Char] -> Int -> [Char]
-appendXAT message i =  L.concat [T.fst (L.splitAt i message), ['x']]
-
-finConcat :: [Char] -> Int -> [Char]
-finConcat message i = L.concat [appendXAT message i, T.snd (splitAt i message)]
-
 
 ----helpers for working with vectors
 
