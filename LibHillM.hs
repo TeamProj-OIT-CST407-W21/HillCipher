@@ -38,7 +38,7 @@ intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list m
 --- will return x val in ax + by = 1
 ---- will return negative x, but after math and mod will still be the correct answer
 euclidInverse :: Int -> Int -> Int
-euclidInverse num N.mod
+euclidInverse num mod
   | ((N.gcd num N.mod) /= 1) = (-1)
   | ((N.gcd num N.mod) == 1) = T.fst (gcdext num N.mod)
   
