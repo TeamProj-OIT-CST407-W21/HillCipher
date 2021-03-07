@@ -4,6 +4,7 @@ import LibUI as UI
 import Data.List as L
 import Data.Tuple as T
 import Data.Char as Ch
+import GHC.Enum as EN
 
 
 ---Library to format cryptographic message of strings for no repetition and to fit formats such as 2x2 hill or
