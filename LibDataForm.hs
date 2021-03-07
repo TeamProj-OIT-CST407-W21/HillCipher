@@ -20,12 +20,15 @@ module LibDataForm where
 ---data format helpers (see readme)
 
 
+import MessageCrypto as MC
+
 import Data.List as L
 import Data.Tuple as T
 
+
 ---top-level char list to matrix converter
 chartoMatrix :: [Char] -> [[Int]]
-chartoMatrix list = intTwosMatrix (messageNum list) 
+chartoMatrix list = intTwosMatrix (MC.messageNum list) 
 
 ---will need to be sure is 2x2 or 4 long, but takes an integer list and converts to a 2x2 matrix
 intTwosMatrix :: [Int] -> [[Int]]
@@ -35,15 +38,15 @@ intTwosMatrix list = [(T.fst (splitAt 2 list)), (T.snd (splitAt 2 list))]
 ---example of arg to use: listVect [1,2..14] 1 [[[]]]
 listVect :: [Int] -> Int -> [[[Int]]] -> [[[Int]]]
 listVect list iter vectors
- | (iter > (div (length list) 2)) = reverse (take ((length vectors) - 1) vectors)
+ | (iter > (div (length list) 2)) = L.reverse (L.take ((L.length vectors) - 1) vectors)
  | (iter <= (div (length list) 2)) = listVect list (iter + 1) ((changeVectAT list iter) : vectors) 
  
  ---basic converter from a list of 1x2 vectors back to a plain list of numbers
  ----example of arg to use: changeVecttoList a [] 0
 changeVecttoList :: [[[Int]]] -> [Int] -> Int -> [Int]
 changeVecttoList vectors newlist iter
- | (iter >= (length vectors)) = newlist
- | (iter < (length vectors)) = changeVecttoList vectors (L.concat [newlist, (L.concat [vectors !! iter !! 0, vectors !! iter !! 1])]) (iter + 1)
+ | (iter >= (L.length vectors)) = newlist
+ | (iter < (L.length vectors)) = changeVecttoList vectors (L.concat [newlist, (L.concat [vectors !! iter !! 0, vectors !! iter !! 1])]) (iter + 1)
  
 
 ----helpers for working with vectors
