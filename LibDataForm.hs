@@ -19,22 +19,22 @@ module LibDataForm where
 
 ---data format helpers (see readme)
 
----char list to matrix
-charKeytoMatrix :: [Char] -> [[Int]]
-charKeytoMatrix list = intListtoMatrix (messageNum list) 
+---top-level char list to matrix converter
+chartoMatrix :: [Char] -> [[Int]]
+chartoMatrix list = intTwosMatrix (messageNum list) 
 
 ---will need to be sure is 2x2 or 4 long, but takes an integer list and converts to a 2x2 matrix
-intListtoMatrix :: [Int] -> [[Int]]
-intListtoMatrix list = [(T.fst (splitAt 2 list)), (T.snd (splitAt 2 list))]
+intTwosMatrix :: [Int] -> [[Int]]
+intTwosMatrix list = [(T.fst (splitAt 2 list)), (T.snd (splitAt 2 list))]
 
------basic converter for a list to a list of 1x2 vectors
+-----basic converter for a list of numbers to a list of 1x2 vectors
 ---example of arg to use: listVect [1,2..14] 1 [[[]]]
 listVect :: [Int] -> Int -> [[[Int]]] -> [[[Int]]]
 listVect list iter vectors
  | (iter > (div (length list) 2)) = reverse (take ((length vectors) - 1) vectors)
  | (iter <= (div (length list) 2)) = listVect list (iter + 1) ((changeVectAT list iter) : vectors) 
  
- ---basic converter from a list of 1x2 vectors back to a plain list
+ ---basic converter from a list of 1x2 vectors back to a plain list of numbers
  ----example of arg to use: changeVecttoList a [] 0
 changeVecttoList :: [[[Int]]] -> [Int] -> Int -> [Int]
 changeVecttoList vectors newlist iter
@@ -43,6 +43,7 @@ changeVecttoList vectors newlist iter
  
 
 ----helpers for working with vectors
+----different steps in parsing elements together
 
 changeVectAT :: [Int] -> Int -> [[Int]]
 changeVectAT list iter = [[(getTwoElem list iter) !! 0], [(getTwoElem list iter) !! 1]]
