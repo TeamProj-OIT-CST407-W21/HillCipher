@@ -105,6 +105,10 @@ scalarModVect list = L.map modAlphaVect list
 scalarMod :: [Int] -> [Int]
 scalarMod list = L.map modAlpha list
 
+--- 1x2 matrix helper mod
+modAlphaVect :: [Int] -> [Int]
+modAlphaVect x = mod (x !! 0) 26 : []
+
 modAlpha :: Int -> Int
 modAlpha x = N.mod x 26
 
