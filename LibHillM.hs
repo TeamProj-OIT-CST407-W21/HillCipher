@@ -5,6 +5,8 @@ module LibHillM where
 ----as [[a, b], [c, d]] and vectors [[a], [b]].  However, could be done in pure list form on the back
 ----end as long as can keep track of the same math (see readme)
 
+import LibDataForm as LD
+
 import Data.List as L
 import Data.Tuple as T
 import GHC.Real as N
@@ -93,6 +95,12 @@ flipPolarity x = 0 - x
 scalarModMatrix :: [[Int]] -> [[Int]]
 scalarModMatrix matrix = L.map scalarMod matrix
 
+---scalar mod of 1x2 matrix by 26 where
+---- [a]
+-----[b] % 26
+scalarModVect :: [[Int]] -> [[Int]]
+scalarModVect list = L.map modAlphaVect list
+
 ----helpers for scalar mod matrix
 scalarMod :: [Int] -> [Int]
 scalarMod list = L.map modAlpha list
@@ -114,7 +122,7 @@ multList list x = L.map(x*) list
 ---helpers for core encrypt/decrypt math
 
 intMathVectlistThree :: [Int] -> [[Int]] -> [[[Int]]]
-intMathVectlistThree list matrix = mathVectlistTwo (listVect list 1 [[[]]]) matrix
+intMathVectlistThree list matrix = mathVectlistTwo (LD.listVect list 1 [[[]]]) matrix
 
 
 mathVectlistTwo :: [[[Int]]] -> [[Int]] -> [[[Int]]] 
