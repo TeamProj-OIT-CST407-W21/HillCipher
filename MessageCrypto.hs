@@ -68,10 +68,6 @@ finConcat message i = L.concat [appendXAT message i, T.snd (splitAt i message)]
 formatMone :: [Char] -> [Char]
 formatMone message = charRepeat (messagetoLower (UI.removenonLetters message)) 0
 
------change to all lowercase
-messagetoLower :: [Char] -> [Char]
-messagetoLower message = L.map Ch.toLower message
-
 ----helpers for letter to  number conversion
 
 ----helper to change lowercase plaintext to number
