@@ -19,6 +19,10 @@ module LibDataForm where
 
 ---data format helpers (see readme)
 
+
+import Data.List as L
+import Data.Tuple as T
+
 ---top-level char list to matrix converter
 chartoMatrix :: [Char] -> [[Int]]
 chartoMatrix list = intTwosMatrix (messageNum list) 
