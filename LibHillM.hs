@@ -27,13 +27,6 @@ checkMatrix matrix
 ---due to checks in euclidInverse, will also check gcd(determinate, 26) = 1
 checkDinverse :: Int -> Int
 checkDinverse deter = mod (deter * (euclidInverse deter 26)) 26 
-
-
------calculate K inverse for a 2x2 matrix
-calcDKeyTwos :: [[Int]] -> [[Int]]
-calcDKeyTwos matrix
-  | (checkDinverse (calDeterTwobyTwo matrix) == 1) = scalarMultMatrixTwos (euclidInverse (calDeterTwobyTwo matrix) 26) (adjugateTwobyTwo matrix)
-  | (checkDinverse (calDeterTwobyTwo matrix) /= 1) = [[-1]]
   
  
  ---core encrypt/decrypt for 2x2 matrices, once converted from char, then back to int
