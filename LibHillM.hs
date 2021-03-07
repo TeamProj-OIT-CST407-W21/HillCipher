@@ -7,7 +7,6 @@ module LibHillM where
 
 import Data.List as L
 import Data.Tuple as T
-import Data.Char as Ch
 import GHC.Real as N
 
 -----calculate K inverse (decryption key)
@@ -26,7 +25,7 @@ checkMatrix matrix
 ---returns 1 if true, some other number if false
 ---due to checks in euclidInverse, will also check gcd(determinate, 26) = 1
 checkDinverse :: Int -> Int
-checkDinverse deter = mod (deter * (euclidInverse deter 26)) 26 
+checkDinverse deter = N.mod (deter * (euclidInverse deter 26)) 26 
   
  
  ---core encrypt/decrypt for 2x2 matrices, once converted from char, then back to int
@@ -39,9 +38,9 @@ intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list m
 --- will return x val in ax + by = 1
 ---- will return negative x, but after math and mod will still be the correct answer
 euclidInverse :: Int -> Int -> Int
-euclidInverse num mod
-  | ((gcd num mod) /= 1) = (-1)
-  | ((gcd num mod) == 1) = T.fst (gcdext num mod)
+euclidInverse num N.mod
+  | ((N.gcd num N.mod) /= 1) = (-1)
+  | ((N.gcd num N.mod) == 1) = T.fst (gcdext num N.mod)
   
 ----where n = a, m = b in the Bezout's algo
 ---- ax + by = 1
@@ -52,8 +51,8 @@ gcdext n m = gcdexthelper n m 1 0 0 1 where
   gcdexthelper n m x1 y1 x2 y2 
    | m == 0 = (x1, y1)
    | otherwise = gcdexthelper m r x1p y1p x2p y2p where
-     q = div n m
-     r = mod n m
+     q = N.div n m
+     r = N.mod n m
      x1p = x2
      y1p = y2
      x2p = x1 - q * x2
@@ -88,6 +87,29 @@ adjugateTwobyTwo matrix = [[(matrix !! 1 !! 1), (flipPolarity (matrix !! 0 !! 1)
 flipPolarity :: Int -> Int
 flipPolarity x = 0 - x
 
+----scalar mod 26 by a matrix where
+--- [a, b]
+----[c, d] % 26 
+scalarModMatrix :: [[Int]] -> [[Int]]
+scalarModMatrix matrix = L.map scalarMod matrix
+
+----helpers for scalar mod matrix
+scalarMod :: [Int] -> [Int]
+scalarMod list = L.map modAlpha list
+
+modAlpha :: Int -> Int
+modAlpha x = N.mod x 26
+
+---scalar multiply 2x2 matrix where
+--- [a, b]
+--- [c, d] * x
+scalarMultMatrixTwos :: Int -> [[Int]] -> [[Int]]
+scalarMultMatrixTwos x matrix = [(multList (matrix !! 0) x), (multList (matrix !! 1) x)]
+
+---helper for scalar mult
+multList :: [Int] -> Int -> [Int]
+multList list x = L.map(x*) list
+
 
 ---helpers for core encrypt/decrypt math
 
@@ -100,5 +122,5 @@ mathVectlistTwo vectors matrix = L.map scalarModVect (mathVectlistOne vectors [[
 
 mathVectlistOne :: [[[Int]]] -> [[[Int]]] -> [[Int]] -> Int -> [[[Int]]]
 mathVectlistOne vectors newvectors matrix iter
-  | (iter >= (length vectors)) = reverse (take ((length newvectors) - 1) newvectors)
-  | (iter < (length vectors)) = mathVectlistOne vectors (matrixTwosVectMult matrix (vectors !! iter) : newvectors) matrix (iter + 1)
+  | (iter >= (L.length vectors)) = L.reverse (L.take ((L.length newvectors) - 1) newvectors)
+  | (iter < (L.length vectors)) = mathVectlistOne vectors (matrixTwosVectMult matrix (vectors !! iter) : newvectors) matrix (iter + 1)
