@@ -21,7 +21,7 @@ calcDKeyTwos matrix
 checkMatrix :: [[Int]] -> Bool
 checkMatrix matrix
   | ((checkDinverse (calDeterTwobyTwo matrix) == 1) && (calDeterTwobyTwo matrix /= 13) && (calDeterTwobyTwo matrix /= 2) && (calDeterTwobyTwo matrix /= 0)) = True
-  | ((checkDinverse (calDeterTwobyTwo matrix) /= 1) || (calDeterTwobyTwo matrix == 13) || (calDeterTwobyTwo matrix == 2) || (calDeterTwobyTwo matrix == 0) = False
+  | ((checkDinverse (calDeterTwobyTwo matrix) /= 1) || (calDeterTwobyTwo matrix == 13) || (calDeterTwobyTwo matrix == 2) || (calDeterTwobyTwo matrix == 0)) = False
   
 ----checks that determinate*(inverseGCD (determinate mod)) % mod = 1
 ---returns 1 if true, some other number if false
