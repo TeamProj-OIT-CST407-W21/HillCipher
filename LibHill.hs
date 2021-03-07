@@ -24,6 +24,21 @@ checkMatrix matrix
 checkDinverse :: Int -> Int
 checkDinverse deter = mod (deter * (euclidInverse deter 26)) 26 
 
+
+-----calculate K inverse for a 2x2 matrix
+calcDKeyTwos :: [[Int]] -> [[Int]]
+calcDKeyTwos matrix
+  | (checkDinverse (calDeterTwobyTwo matrix) == 1) = scalarMultMatrixTwos (euclidInverse (calDeterTwobyTwo matrix) 26) (adjugateTwobyTwo matrix)
+  | (checkDinverse (calDeterTwobyTwo matrix) /= 1) = [[-1]]
+  
+ 
+ ---core encrypt/decrypt for 2x2 matrices, once converted from char, then back to int
+intBasicMathFullTwos :: [Int] -> [[Int]] -> [Int]
+intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list matrix) [] 0
+
+
+---mathematical helpers
+
 --- will return x val in ax + by = 1
 ---- will return negative x, but after math and mod will still be the correct answer
 euclidInverse :: Int -> Int -> Int
@@ -47,19 +62,6 @@ gcdext n m = gcdexthelper n m 1 0 0 1 where
      x2p = x1 - q * x2
      y2p = y1 - q * y2
 
------calculate K inverse for a 2x2 matrix
-calcDKeyTwos :: [[Int]] -> [[Int]]
-calcDKeyTwos matrix
-  | (checkDinverse (calDeterTwobyTwo matrix) == 1) = scalarMultMatrixTwos (euclidInverse (calDeterTwobyTwo matrix) 26) (adjugateTwobyTwo matrix)
-  | (checkDinverse (calDeterTwobyTwo matrix) /= 1) = [[-1]]
-  
- 
- ---core encrypt/decrypt for 2x2 matrices, once converted from char, then back to int
-intBasicMathFullTwos :: [Int] -> [[Int]] -> [Int]
-intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list matrix) [] 0
-
-
-  
 --computes multiplication of a single parsed 2x2 matrix with a 1x2 vector
 --- [a b] * [x]
 ----[c d]   [y]
@@ -68,6 +70,29 @@ intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list m
 -- for a new 1x2 vector
 matrixTwosVectMult :: [[Int]] -> [[Int]] -> [[Int]]
 matrixTwosVectMult matrix vect = [[((matrix !! 0 !! 0) * (vect !! 0 !! 0) + (matrix !! 0 !! 1) * (vect !! 1 !! 0))], [((matrix !! 1 !! 0) * (vect !! 0 !! 0) + (matrix !! 1 !! 1) * (vect !! 1 !! 0))]]
+
+---find a 2x2 matrix determinate
+--- ad - cd in the following:
+---- [ a b ]
+---- [ c d ]
+calDeterTwobyTwo :: [[Int]] -> Int
+calDeterTwobyTwo matrix = ((matrix !! 0 !! 0) * (matrix !! 1 !! 1)) - ((matrix !! 0 !! 1) * (matrix !! 1 !! 0))
+
+---computes the adjugate of a 2x2 matrix
+---[a b]
+---[c d]
+---becomes
+----[d -b]
+----[-c a]
+adjugateTwobyTwo :: [[Int]] -> [[Int]]
+adjugateTwobyTwo matrix = [[(matrix !! 1 !! 1), (flipPolarity (matrix !! 0 !! 1))], [(flipPolarity (matrix !! 1 !! 0)), (matrix !! 0 !! 0)]] 
+
+--changes -5 to 5 and 5 to -5
+flipPolarity :: Int -> Int
+flipPolarity x = 0 - x
+
+---data format helpers (see readme)
+
 
 ---char list to matrix
 charKeytoMatrix :: [Char] -> [[Int]]
