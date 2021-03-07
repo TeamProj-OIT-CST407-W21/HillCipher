@@ -19,7 +19,7 @@ import GHC.Enum as EN
 
 ---will also keep to crypto standards of plaintext as lowercase and ability to output cipher text as uppercase
 
---- in addition, will convert text to numbers for working with ciphers such as Ceaser, Vignere, Hill, et cetera
+--- in addition, will convert text to numbers for working with ciphers such as Ceaser, Vigenere, Hill, et cetera
 
 ----final character formating : removing non-letter characters, padding if repeat (hello becomes helxlo) and 
 ----putting plaintext to lowercase
