@@ -181,12 +181,6 @@ formatMone message = charRepeat (messagetoLower (removenonLetters message)) 0
 messagetoLower :: [Char] -> [Char]
 messagetoLower message = L.map Ch.toLower message
 
-
----basic code courtesy of stack overflow
----- helper for removing characters from plaintext input 
-removenonLetters :: [Char] -> [Char]
-removenonLetters message = filter (not . (`elem` ",.<> ?!-@#$%^&*1234567890()_+=|{}[]~:;\"\'")) message
-
 ----helpers for working with vectors
 
 changeVectAT :: [Int] -> Int -> [[Int]]
