@@ -32,7 +32,7 @@ checkDinverse deter = N.mod (deter * (euclidInverse deter 26)) 26
  
  ---core encrypt/decrypt for 2x2 matrices, once converted from char, then back to int
 intBasicMathFullTwos :: [Int] -> [[Int]] -> [Int]
-intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list matrix) [] 0
+intBasicMathFullTwos list matrix = LD.changeVecttoList (intMathVectlistThree list matrix) [] 0
 
 
 ---mathematical helpers
@@ -40,9 +40,9 @@ intBasicMathFullTwos list matrix = changeVecttoList (intMathVectlistThree list m
 --- will return x val in ax + by = 1
 ---- will return negative x, but after math and mod will still be the correct answer
 euclidInverse :: Int -> Int -> Int
-euclidInverse num mod
-  | ((N.gcd num N.mod) /= 1) = (-1)
-  | ((N.gcd num N.mod) == 1) = T.fst (gcdext num N.mod)
+euclidInverse num modparm
+  | ((N.gcd num modparm) /= 1) = (-1)
+  | ((N.gcd num modparm) == 1) = T.fst (gcdext num modparm)
   
 ----where n = a, m = b in the Bezout's algo
 ---- ax + by = 1
