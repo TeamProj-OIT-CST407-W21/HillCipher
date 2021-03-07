@@ -4,7 +4,6 @@ import Data.List as L
 import Data.Tuple as T
 import Data.Char as Ch
 import GHC.Real as N
-import GHC.Enum as EN
 
 -----calculate K inverse (decryption key)
 calcDKeyTwos :: [[Int]] -> [[Int]]
@@ -153,33 +152,6 @@ appendXAT message i =  L.concat [T.fst (L.splitAt i message), ['x']]
 finConcat :: [Char] -> Int -> [Char]
 finConcat message i = L.concat [appendXAT message i, T.snd (splitAt i message)]
 
-
-----helpers for letter to  number conversion
-
-----helper to change lowercase plaintext to number
-lowercharNum :: Char -> Int
-lowercharNum letter 
-  | ((letter >= 'a') && (letter <= 'z')) = (EN.fromEnum letter) - 97
-  | (letter < 'a') = (-1)
-  | (letter > 'z') = (-1)
-
------helper to change from number to uppercase ciphertext 
-numUpperchar :: Int -> Char
-numUpperchar num 
- | ((num >=0) && (num <= 25)) = EN.toEnum (num + 65)::Char
- | (num < 0) = 'E'
- | (num > 25) = 'E'
-
-
-----helpers for input formatting
-
----- intermediate helper
-formatMone :: [Char] -> [Char]
-formatMone message = charRepeat (messagetoLower (removenonLetters message)) 0
-
------change to all lowercase
-messagetoLower :: [Char] -> [Char]
-messagetoLower message = L.map Ch.toLower message
 
 ----helpers for working with vectors
 
