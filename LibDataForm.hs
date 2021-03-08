@@ -24,6 +24,7 @@ import MessageCrypto as MC
 
 import Data.List as L
 import Data.Tuple as T
+import Real.GHC as N
 
 
 ---top-level char list to matrix converter
@@ -32,14 +33,14 @@ chartoMatrix list = intTwosMatrix (MC.messageNum list)
 
 ---will need to be sure is 2x2 or 4 long, but takes an integer list and converts to a 2x2 matrix
 intTwosMatrix :: [Int] -> [[Int]]
-intTwosMatrix list = [(T.fst (splitAt 2 list)), (T.snd (splitAt 2 list))]
+intTwosMatrix list = [(T.fst (L.splitAt 2 list)), (T.snd (L.splitAt 2 list))]
 
 -----basic converter for a list of numbers to a list of 1x2 vectors
 ---example of arg to use: listVect [1,2..14] 1 [[[]]]
 listVect :: [Int] -> Int -> [[[Int]]] -> [[[Int]]]
 listVect list iter vectors
- | (iter > (div (length list) 2)) = L.reverse (L.take ((L.length vectors) - 1) vectors)
- | (iter <= (div (length list) 2)) = listVect list (iter + 1) ((changeVectAT list iter) : vectors) 
+ | (iter > (N.div (L.length list) 2)) = L.reverse (L.take ((L.length vectors) - 1) vectors)
+ | (iter <= (N.div (L.length list) 2)) = listVect list (iter + 1) ((changeVectAT list iter) : vectors) 
  
  ---basic converter from a list of 1x2 vectors back to a plain list of numbers
  ----example of arg to use: changeVecttoList a [] 0
@@ -57,6 +58,6 @@ changeVectAT list iter = [[(getTwoElem list iter) !! 0], [(getTwoElem list iter)
 
 getTwoElem :: [Int] -> Int -> [Int]
 getTwoElem list iter
-  | (iter == 1) = take 2 list
-  | (iter > 1) = drop ((iter * 2) -2) (take (iter * 2) list)
+  | (iter == 1) = L.take 2 list
+  | (iter > 1) = L.drop ((iter * 2) -2) (L.take (iter * 2) list)
   | (iter < 1) = [-1]
