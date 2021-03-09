@@ -6,6 +6,7 @@ import MessageCrypto as MC
 import System.Exit as E
 import LibUI as UI
 import LibDataForm as DF
+import GHC.Show as S
 
 main :: IO()
 main = do
@@ -72,7 +73,7 @@ main = do
 outputIntMatrix :: [[Int]] -> Char -> IO()
 outputIntMatrix m keyName = do
    let singleM = [m!!0!!0,m!!0!!1,m!!1!!0,m!!1!!1]
-   let charM = map show singleM
+   let charM = L.map S.show singleM
    if (keyName == 'e') 
       then do
          putStrLn "Your Encryption key is: "
