@@ -1,7 +1,6 @@
 module MessageCrypto where
 
 import LibUI as UI
-
 import Data.List as L
 import Data.Tuple as T
 import Data.Char as Ch
@@ -21,7 +20,7 @@ import GHC.Real as N
 
 ---will also keep to crypto standards of plaintext as lowercase and ability to output cipher text as uppercase
 
---- in addition, will convert text to numbers for working with ciphers such as Ceaser, Vigenere, Hill, et cetera
+--- in addition, will convert text to numbers for working with ciphers such as Ceaser, Vignere, Hill, et cetera
 
 ----final character formating : removing non-letter characters, padding if repeat (hello becomes helxlo) and 
 ----putting plaintext to lowercase
@@ -33,9 +32,9 @@ formatMFin message = lengthFormat (formatMone message)
 charRepeat :: [Char] -> Int -> [Char]
 charRepeat message i
   | ((i + 1) == (length message)) = message
-  | ((message !! i == message !! (i+1)) && ((i+1) < L.length message)) = charRepeat (finConcat (message) (i+1)) (i+1)
-  | ((message !! i /= message !! (i+1)) && ((i+1) < L.length message)) = charRepeat (message) (i+1)
-  | ((i + 1) > (L.length message)) = ['E']
+  | ((message !! i == message !! (i+1)) && ((i+1) < length message)) = charRepeat (finConcat (message) (i+1)) (i+1)
+  | ((message !! i /= message !! (i+1)) && ((i+1) < length message)) = charRepeat (message) (i+1)
+  | ((i + 1) > (length message)) = ['E']
 
 ----formatter to pad if text list is odd to change to a matrix
 lengthFormat :: [Char] -> [Char]
@@ -51,10 +50,6 @@ messageNum message = L.map lowercharNum message
 numCipher :: [Int] -> [Char]
 numCipher list = L.map numUpperchar list
 
------change to all lowercase
-messagetoLower :: [Char] -> [Char]
-messagetoLower message = L.map Ch.toLower message
-
 
 ----helpers for character repetition padding
 
@@ -69,6 +64,10 @@ finConcat message i = L.concat [appendXAT message i, T.snd (splitAt i message)]
 ---- intermediate helper
 formatMone :: [Char] -> [Char]
 formatMone message = charRepeat (messagetoLower (UI.removenonLetters message)) 0
+
+-----change to all lowercase
+messagetoLower :: [Char] -> [Char]
+messagetoLower message = L.map Ch.toLower message
 
 ----helpers for letter to  number conversion
 

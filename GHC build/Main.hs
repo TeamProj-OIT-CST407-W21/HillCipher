@@ -6,6 +6,7 @@ import MessageCrypto as MC
 import System.Exit as E
 import LibUI as UI
 import LibDataForm as DF
+import GHC.Show as S
 
 main :: IO()
 main = do
@@ -17,9 +18,8 @@ main = do
          putStrLn "ERROR: Improper key, returning to top."
          main
    else do
-      let basicEKey = chartoMatrix tempKey
+      let basicEKey = DF.chartoMatrix tempKey
       let decyrKey = LH.calcDKeyTwos (basicEKey)
-      ---output decryption key --- in matrix form?
       outputIntMatrix basicEKey 'e'
       outputIntMatrix (scalarModMatrix decyrKey) 'd'
       putStrLn "\nWould you like to encrypt('e') or decrypt('d'): "
@@ -31,7 +31,7 @@ main = do
             let msg = (MC.formatMFin initialMsg)
             putStrLn "Message AFTER PADDING: "
             print msg
-            let encryptedMsg = numCipher(intBasicMathFullTwos (messageNum msg) basicEKey)
+            let encryptedMsg = MC.numCipher(LH.intBasicMathFullTwos (MC.messageNum msg) basicEKey)
             putStrLn "Your encrypted message is: "
             print encryptedMsg
             putStrLn "\nPress y to continue, or any other key to exit: "
@@ -45,9 +45,9 @@ main = do
             putStrLn "Enter a message to decrypt: "
             initialMsg <- getLine
             let msg = (UI.formatKeyBasic initialMsg)
-            if (mod (L.length msg) 2 == 0)
+            if ((mod (L.length msg) 2 == 0) && (L.length msg /= 0))
                then do
-                  let decryptedMsg = messagetoLower(numCipher(intBasicMathFullTwos (messageNum msg) decyrKey))
+                  let decryptedMsg = MC.messagetoLower(MC.numCipher(LH.intBasicMathFullTwos (MC.messageNum msg) decyrKey))
                   putStrLn "Your decrypted message is: "
                   print decryptedMsg
                   putStrLn "\nPress y to continue, or any other key to exit: "
@@ -57,7 +57,7 @@ main = do
                   else
                      return ()
             else do
-               putStrLn "ERROR: improper message, returning to top!"
+               putStrLn "ERROR: improper message length, returning to top!"
                main
       else do
          putStrLn " ERROR: Invalid choice, returning to top!"
@@ -73,7 +73,7 @@ main = do
 outputIntMatrix :: [[Int]] -> Char -> IO()
 outputIntMatrix m keyName = do
    let singleM = [m!!0!!0,m!!0!!1,m!!1!!0,m!!1!!1]
-   let charM = map show singleM
+   let charM = L.map S.show singleM
    if (keyName == 'e') 
       then do
          putStrLn "Your Encryption key is: "

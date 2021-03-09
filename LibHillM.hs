@@ -5,11 +5,10 @@ module LibHillM where
 ----as [[a, b], [c, d]] and vectors [[a], [b]].  However, could be done in pure list form on the back
 ----end as long as can keep track of the same math (see readme)
 
-import LibDataForm as LD
-
 import Data.List as L
 import Data.Tuple as T
 import GHC.Real as N
+import LibDataForm as LD
 
 -----calculate K inverse (decryption key)
 calcDKeyTwos :: [[Int]] -> [[Int]]
@@ -20,8 +19,8 @@ calcDKeyTwos matrix
 ---check matrix is not one-way and will be able to be decrypted
 checkMatrix :: [[Int]] -> Bool
 checkMatrix matrix
-  | ((checkDinverse (calDeterTwobyTwo matrix) == 1) && (calDeterTwobyTwo matrix /= 13) && (calDeterTwobyTwo matrix /= 2) && (calDeterTwobyTwo matrix /= 0)) = True
-  | ((checkDinverse (calDeterTwobyTwo matrix) /= 1) || (calDeterTwobyTwo matrix == 13) || (calDeterTwobyTwo matrix == 2) || (calDeterTwobyTwo matrix == 0)) = False
+  | ((checkDinverse (calDeterTwobyTwo matrix) == 1) && (calDeterTwobyTwo matrix /= 13) && (calDeterTwobyTwo matrix /= 2) && (calDeterTwobyTwo matrix /= 0))= True
+  | ((checkDinverse (calDeterTwobyTwo matrix) /= 1) || (calDeterTwobyTwo matrix == 13) || (calDeterTwobyTwo matrix == 2) || (calDeterTwobyTwo matrix == 0))= False
   
 ----checks that determinate*(inverseGCD (determinate mod)) % mod = 1
 ---returns 1 if true, some other number if false
@@ -40,9 +39,9 @@ intBasicMathFullTwos list matrix = LD.changeVecttoList (intMathVectlistThree lis
 --- will return x val in ax + by = 1
 ---- will return negative x, but after math and mod will still be the correct answer
 euclidInverse :: Int -> Int -> Int
-euclidInverse num modparm
-  | ((N.gcd num modparm) /= 1) = (-1)
-  | ((N.gcd num modparm) == 1) = T.fst (gcdext num modparm)
+euclidInverse num modparam
+  | ((N.gcd num modparam) /= 1) = (-1)
+  | ((N.gcd num modparam) == 1) = T.fst (gcdext num modparam)
   
 ----where n = a, m = b in the Bezout's algo
 ---- ax + by = 1
@@ -105,9 +104,11 @@ scalarModVect list = L.map modAlphaVect list
 scalarMod :: [Int] -> [Int]
 scalarMod list = L.map modAlpha list
 
+
 --- 1x2 matrix helper mod
 modAlphaVect :: [Int] -> [Int]
-modAlphaVect x = N.mod (x !! 0) 26 : []
+modAlphaVect x = mod (x !! 0) 26 : []
+
 
 modAlpha :: Int -> Int
 modAlpha x = N.mod x 26
