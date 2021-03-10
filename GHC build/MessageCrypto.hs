@@ -31,11 +31,11 @@ formatMFin message = lengthFormat (formatMone message)
 --pad for repetition
 charRepeat :: [Char] -> Int -> [Char]
 charRepeat message i
-  | ((i + 1) == (length message)) = message
+  | (length message == 0) = message
+  | ((i + 1) >= (length message)) = message
   | ((message !! i == message !! (i+1)) && ((i+1) < length message)) = charRepeat (finConcat (message) (i+1)) (i+1)
   | ((message !! i /= message !! (i+1)) && ((i+1) < length message)) = charRepeat (message) (i+1)
-  | ((i + 1) > (length message)) = ['E']
-
+  
 ----formatter to pad if text list is odd to change to a matrix
 lengthFormat :: [Char] -> [Char]
 lengthFormat message

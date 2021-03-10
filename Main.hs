@@ -29,17 +29,22 @@ main = do
             putStrLn "Enter a message to encrypt: "
             initialMsg <- getLine
             let msg = (MC.formatMFin initialMsg)
-            putStrLn "Message AFTER PADDING: "
-            print msg
-            let encryptedMsg = MC.numCipher(LH.intBasicMathFullTwos (MC.messageNum msg) basicEKey)
-            putStrLn "Your encrypted message is: "
-            print encryptedMsg
-            putStrLn "\nPress y to continue, or any other key to exit: "
-            continue <-getLine
-            if (continue == "y")
-               then main
-            else
-               return ()
+            if ((L.length msg) /= 0)
+               then do
+                  putStrLn "Message AFTER PADDING: "
+                  print msg
+                  let encryptedMsg = MC.numCipher(LH.intBasicMathFullTwos (MC.messageNum msg) basicEKey)
+                  putStrLn "Your encrypted message is: "
+                  print encryptedMsg
+                  putStrLn "\nPress y to continue, or any other key to exit: "
+                  continue <-getLine
+                  if (continue == "y")
+                     then main
+                  else
+                     return ()
+            else do
+               putStrLn "ERROR: improper message length, returning to top!"
+               main
       else if (choice == "d")
          then do
             putStrLn "Enter a message to decrypt: "

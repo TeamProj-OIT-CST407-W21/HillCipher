@@ -31,16 +31,16 @@ formatMFin message = lengthFormat (formatMone message)
 --pad for repetition
 charRepeat :: [Char] -> Int -> [Char]
 charRepeat message i
-  | (L.length message == 0) = message
+  | (length message == 0) = message
   | ((i + 1) >= (length message)) = message
-  | ((message !! i == message !! (i+1)) && ((i+1) < L.length message)) = charRepeat (finConcat (message) (i+1)) (i+1)
-  | ((message !! i /= message !! (i+1)) && ((i+1) < L.length message)) = charRepeat (message) (i+1)
+  | ((message !! i == message !! (i+1)) && ((i+1) < length message)) = charRepeat (finConcat (message) (i+1)) (i+1)
+  | ((message !! i /= message !! (i+1)) && ((i+1) < length message)) = charRepeat (message) (i+1)
   
 ----formatter to pad if text list is odd to change to a matrix
 lengthFormat :: [Char] -> [Char]
 lengthFormat message
- | (N.even (L.length message)) = message
- | (N.odd (L.length message)) = L.concat [message, ['x']] 
+ | (N.even (length message)) = message
+ | (N.odd (length message)) = L.concat [message, ['x']] 
 
 ---changing a desired lowercase formatted string to numbers
 messageNum :: [Char] -> [Int]
